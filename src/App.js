@@ -1,28 +1,30 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+const Input = props => <input type="text" {...props} />
+
+const fields = [
+  { name: "company", placeholder: "Company" },
+  { name: "email", placeholder: "Email" },
+  { name: "firstName", placeholder: "First Name" },
+  { name: "lastName", placeholder: "First Name" }
+];
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+  state = { firstName: "", lastName: "", email: "", company: "" };
+    
+  handleChange = ({ target: {name, value} }) => this.setState({ [name]: value });
+    
+  handleSubmit = e => {
+    e.preventDefault();
+    alert(JSON.stringify(this.state, null, 4));
   }
-}
+    
+  render = () => (
+    <form onSubmit={this.handleSubmit}>
+      {fields.map(props => <Input key="props.name" onChange={this.handleChange} {...props}/>)}   
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
 
 export default App;
